@@ -1,5 +1,5 @@
 import './styles/styles.css';
-import Field from './Field';
+import Field from './components/Field';
 
 function App() {
   return (

@@ -1,7 +1,6 @@
 export default function createField(rows, cols, mines) {
   let board = Array(rows * cols).fill(null).map((item, index) => ({
-    value: 0,
-    index: index,
+    id: index,
     x: index % cols,
     y: Math.floor(index / rows),
     isRevealed: false,
@@ -9,6 +8,12 @@ export default function createField(rows, cols, mines) {
   }));
 
   board = setupMines(rows, cols, board, mines);
+  board.forEach((cell) => {
+    if (cell.value !== 'x') {
+      cell.value = calcNeigMines(rows, cols, board, cell.id, cell.x, cell.y);
+    }
+  });
+
   return board;
 }
 
@@ -19,7 +24,7 @@ function setupMines(rows, cols, board, mines) {
   while (minesCounter < localMines) {
     const randomIndex = Math.floor(Math.random() * rows * cols);
 
-    if (board[randomIndex].value === 0) {
+    if (!board[randomIndex].value) {
       board[randomIndex].value = 'x';
       minesCounter++;
     }
@@ -34,4 +39,59 @@ function checkminesQuantity(rows, cols, mines) {
   return mines > minesLimit
     ? minesLimit
     : mines;
+}
+
+function calcNeigMines(rows, cols, board, id, x, y) {
+  let minesCounter = 0;
+
+  if (x > 0) {
+    if (board[id - 1].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (x < cols - 1) {
+    if (board[id + 1].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (y > 0) {
+    if (board[id - cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (y < rows - 1) {
+    if (board[id + cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  // diagonals
+  if (x > 0 && y > 0) {
+    if (board[id - 1 - cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (x > 0 && y < rows - 1) {
+    if (board[id - 1 + cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (x < cols - 1 && y > 0) {
+    if (board[id + 1 - cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  if (x < cols - 1 && y < rows - 1) {
+    if (board[id + 1 + cols].value === 'x') {
+      minesCounter++;
+    }
+  }
+
+  return minesCounter || '';
 }

@@ -10,8 +10,8 @@ export default function Cell({ cellObj, revealCell, updateFlag }) {
         height: `${SIZES.cellSize}px`,
         margin: `${SIZES.margin}px`,
       }}
-      onClick={() => revealCell(cellObj.index)}
-      onContextMenu={(event) => updateFlag(event, cellObj.index)}
+      onClick={() => revealCell(cellObj.id)}
+      onContextMenu={(event) => updateFlag(event, cellObj.id)}
     >
       {cellObj.isRevealed ? cellObj.value : ''}
     </button>

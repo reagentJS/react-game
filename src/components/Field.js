@@ -17,8 +17,14 @@ export default function Field() {
 
   const revealCell = (index) => {
     const newGrid = [...grid];
-    newGrid[index].isRevealed = true;
-    setGrid(newGrid);
+
+    if (newGrid[index].value === 'x') {
+      alert('mine found!');
+    }
+    else {
+      newGrid[index].isRevealed = true;
+      setGrid(newGrid);
+    }
   }
 
   const updateFlag = (event, index) => {
@@ -40,7 +46,7 @@ export default function Field() {
       {grid.map((cellObj) => {
         return (
           <Cell
-            key={cellObj.index}
+            key={cellObj.id}
             cellObj={cellObj}
             revealCell={revealCell}
             updateFlag={updateFlag}

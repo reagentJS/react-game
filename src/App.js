@@ -1,10 +1,9 @@
 import './styles/styles.css';
+import Field from './Field';
 
 function App() {
   return (
-    <div className="App">
-      HELLO
-    </div>
+    <Field />
   );
 }
 

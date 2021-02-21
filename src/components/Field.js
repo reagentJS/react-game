@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import SIZES from '../constants/SIZES';
 import createField from '../utils/createField';
+import revealEmptyCells from '../utils/revealEmptyCells';
 
 export default function Field() {
   const [grid, setGrid] = useState([]);
+  SIZES.cols = 9;
+  SIZES.rows = 9;
+  const minesQuantity = 9;
 
   useEffect(() => {
     function refreshGrid() {
-      const field = createField(9, 9, 16);
+      const field = createField(minesQuantity);
       setGrid(field);
     }
 
@@ -16,14 +20,13 @@ export default function Field() {
   }, []);
 
   const revealCell = (index) => {
-    const newGrid = [...grid];
-
-    if (newGrid[index].value === 'x') {
-      alert('mine found!');
-    }
-    else {
-      newGrid[index].isRevealed = true;
-      setGrid(newGrid);
+    if (!grid[index].isRevealed) {
+      if (grid[index].value === 'x') {
+        alert('mine found!');
+      }
+      else {
+        setGrid(revealEmptyCells([...grid], index));
+      }
     }
   }
 

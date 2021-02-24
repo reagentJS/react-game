@@ -6,6 +6,7 @@ import createField from '../utils/createField';
 import revealEmptyCells from '../utils/revealEmptyCells';
 import { revealWholeField, playGameLost } from '../utils/gameLost';
 import gameWon from '../utils/gameWon';
+let isWin = false;
 
 export default function Field() {
   const [grid, setGrid] = useState([]);
@@ -38,7 +39,12 @@ export default function Field() {
   }
 
   useEffect(() => {
-    checkWin(revealedCells);
+    if (!isWin && checkWin(revealedCells)) {
+      isWin = true;
+      console.log('WON!')
+      setGrid(revealWholeField([...grid]));
+      gameWon();
+    } 
   });
 
   const updateFlag = (event, index) => {
@@ -73,7 +79,5 @@ export default function Field() {
 }
 
 function checkWin(revealedCells) {
-  if (revealedCells === MINES.cellsWithoutMines) {
-    gameWon();
-  }
+  return revealedCells === MINES.cellsWithoutMines;
 }

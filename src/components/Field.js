@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import SIZES from '../constants/SIZES';
+import MINES from '../constants/MINES';
 import createField from '../utils/createField';
 import revealEmptyCells from '../utils/revealEmptyCells';
+import { revealWholeField, playGameLost } from '../utils/gameLost';
+import gameWon from '../utils/gameWon';
 
 export default function Field() {
   const [grid, setGrid] = useState([]);
+  const [revealedCells, setRevealedCells] = useState(0);
+
   SIZES.cols = 9;
   SIZES.rows = 9;
-  const minesQuantity = 9;
+  MINES.quantity = 9;
 
   useEffect(() => {
     function refreshGrid() {
-      const field = createField(minesQuantity);
-      setGrid(field);
+      setGrid(createField());
     }
 
     refreshGrid();
@@ -22,13 +26,20 @@ export default function Field() {
   const revealCell = (index) => {
     if (!grid[index].isRevealed) {
       if (grid[index].value === 'x') {
-        alert('mine found!');
+        setGrid(revealWholeField([...grid]));
+        playGameLost();
       }
       else {
-        setGrid(revealEmptyCells([...grid], index));
+        const [newGrid, newRevealedCells] = revealEmptyCells([...grid], index);
+        setGrid(newGrid);
+        setRevealedCells(revealedCells + newRevealedCells); 
       }
     }
   }
+
+  useEffect(() => {
+    checkWin(revealedCells);
+  });
 
   const updateFlag = (event, index) => {
     event.preventDefault();
@@ -59,4 +70,10 @@ export default function Field() {
 
     </div>
   );
+}
+
+function checkWin(revealedCells) {
+  if (revealedCells === MINES.cellsWithoutMines) {
+    gameWon();
+  }
 }

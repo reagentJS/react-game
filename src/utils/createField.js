@@ -1,6 +1,7 @@
 import SIZES from '../constants/SIZES';
+import MINES from '../constants/MINES';
 
-export default function createField(mines) {
+export default function createField() {
   let board = Array(SIZES.fieldArea).fill(null).map((item, index) => ({
     id: index,
     x: index % SIZES.cols,
@@ -9,7 +10,7 @@ export default function createField(mines) {
     isFlagged: false,
   }));
 
-  board = setupMines(board, mines);
+  board = setupMines(board);
   board.forEach((cell) => {
     if (cell.value !== 'x') {
       cell.value = calcNeigMines(board, cell.id, cell.x, cell.y);
@@ -19,11 +20,10 @@ export default function createField(mines) {
   return board;
 }
 
-function setupMines(board, mines) {
+function setupMines(board) {
   let minesCounter = 0;
-  const localMines = checkminesQuantity(mines);
 
-  while (minesCounter < localMines) {
+  while (minesCounter < MINES.quantity) {
     const randomIndex = Math.floor(Math.random() * SIZES.fieldArea);
 
     if (!board[randomIndex].value) {
@@ -33,14 +33,6 @@ function setupMines(board, mines) {
   }
 
   return board;
-}
-
-function checkminesQuantity(mines) {
-  const minesLimit = Math.floor(SIZES.fieldArea * 2 / 3);
-
-  return mines > minesLimit
-    ? minesLimit
-    : mines;
 }
 
 function calcNeigMines(board, id, x, y) {

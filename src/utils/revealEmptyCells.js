@@ -3,11 +3,16 @@ import SIZES from '../constants/SIZES';
 export default function revealEmptyCells(grid, id) {
   const flipped = [];
   flipped.push(grid[id]);
+  let revealedCells = 0;
 
   while (flipped.length) {
     const checkingCell = flipped.pop();
     const { id, x, y } = checkingCell;
-    checkingCell.isRevealed = true;
+
+    if (!checkingCell.isRevealed) {
+      checkingCell.isRevealed = true;
+      revealedCells++;
+    }
 
     if (checkingCell.value) {
       break;
@@ -20,6 +25,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1]);
 
         grid[id - 1].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -30,6 +36,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1]);
 
         grid[id + 1].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -40,6 +47,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - SIZES.cols]);
 
         grid[id - SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -50,6 +58,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + SIZES.cols]);
 
         grid[id + SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -61,6 +70,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1 - SIZES.cols]);
 
         grid[id - 1 - SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -71,6 +81,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1 + SIZES.cols]);
 
         grid[id - 1 + SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -81,6 +92,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1 - SIZES.cols]);
 
         grid[id + 1 - SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
 
@@ -91,9 +103,10 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1 + SIZES.cols]);
 
         grid[id + 1 + SIZES.cols].isRevealed = true;
+        revealedCells++;
       }
     }
   }
 
-  return grid;
+  return [grid, revealedCells];
 }

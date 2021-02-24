@@ -4,8 +4,11 @@ const SIZES = {
   cellSize: 44,
   margin: 2,
 
-  get cols() {
-    return this._cols;
+  set rows(newRows) {
+    const localRows = Math.floor(Math.abs(newRows));
+    this._rows = localRows < 2
+      ? 2
+      : localRows;
   },
 
   get rows() {
@@ -13,17 +16,14 @@ const SIZES = {
   },
 
   set cols(newCols) {
-    const localCols = Math.floor(newCols);
+    const localCols = Math.floor(Math.abs(newCols));
     this._cols = localCols < 2
       ? 2
       : localCols;
   },
 
-  set rows(newRows) {
-    const localRows = Math.floor(newRows);
-    this._rows = localRows < 2
-      ? 2
-      : localRows;
+  get cols() {
+    return this._cols;
   },
 
   get fieldArea() {

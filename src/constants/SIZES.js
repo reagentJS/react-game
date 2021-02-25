@@ -1,8 +1,8 @@
 const SIZES = {
   _cols: 9,
   _rows: 9,
-  cellSize: 44,
-  margin: 2,
+  cellSize: 50,
+  margin: 4,
 
   set rows(newRows) {
     const localRows = Math.floor(Math.abs(newRows));

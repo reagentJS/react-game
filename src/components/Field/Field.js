@@ -26,7 +26,17 @@ export default function Field() {
     refreshGrid();
   }, []);
 
-  const revealCell = (index) => {
+  useEffect(() => {
+    if (!isWin && checkWin(revealedCells)) {
+      isWin = true;
+      setGrid(revealWholeField([...grid]));
+      gameWon();
+    }
+  });
+
+  const revealCell = (event, index) => {
+    event.preventDefault();
+
     if (isFirstClick) {
       isFirstClick = false;
       setGrid(fillField([...grid], index));
@@ -45,24 +55,14 @@ export default function Field() {
     }
   }
 
-  const flagCell = (index) => {
-    
-  }
-
-  useEffect(() => {
-    if (!isWin && checkWin(revealedCells)) {
-      isWin = true;
-      setGrid(revealWholeField([...grid]));
-      gameWon();
-    }
-  });
-
   const updateFlag = (event, index) => {
     event.preventDefault();
 
-    const newGrid = [...grid];
-    newGrid[index].isFlagged = true;
-    setGrid(newGrid);
+    if (!grid[index].isRevealed) {
+      const newGrid = [...grid];
+      newGrid[index].isFlagged = !newGrid[index].isFlagged;
+      setGrid(newGrid);
+    }
   }
 
   return (

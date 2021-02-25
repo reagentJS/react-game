@@ -1,10 +1,11 @@
 * {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, Sans-Serif;
 }
 
 body {
   padding-top: 15vh;
+  background-color: #30353b;
 }
 
 .field {
@@ -12,14 +13,68 @@ body {
   margin-bottom: 15vh;
   display: flex;
   flex-wrap: wrap;
-  background-color: pink;
+}
+
+.cell {
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  font-size: 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #a8d0ff 0%, #98c7ff 26%, #5ba6ff 100%);
+  border-radius: 4px;
+  border-top: 1px solid #cbe3ff;
+  border-bottom: 1px solid #c1ddff;
+  transition: all 0.06s ease-out;
+}
+
+.cell-default:hover {
+  background: linear-gradient(to bottom, #c6e0ff 0%, #b7d8ff 26%, #7ab7ff 100%);
+}
+
+.cell-default:active {
+  top: 4px;
+}
+.cell-default:active:before {
+  top: 0;
+  box-shadow: 0 3px 3px black, 0 3px 9px rgba(0, 0, 0, 0.2);
+}
+
+.cell:before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  display: inline-block;
+  border-radius: 5px;
+  height: 50px;
+  background: linear-gradient(to top, #00418e 0%, #0064db 4px);
+  transition: all 0.078s ease-out;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.3), 0 2px 0.8px rgba(0, 0, 0, 0.5), 0 4px 9px rgba(0, 0, 0, 0.2);
 }
 
 .cell-default {
-  opacity: 1;
   cursor: pointer;
 }
 
-.cell-reveal {
-  opacity: 0.4;
+.cell-flagged {
+  background-image: url("../assets/images/flag.png");
+  background-size: contain;
+  background-color: #f3d248;
+}
+
+.cell-revealed {
+  background: #D8D8D8;
+}
+
+.cell-mine {
+  background-image: url("../assets/images/mine.png");
+  background-size: contain;
+  background-color: #5ba6ff;
 }

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Cell from './Cell';
-import SIZES from '../constants/SIZES';
-import MINES from '../constants/MINES';
-import createField from '../utils/createField';
-import revealEmptyCells from '../utils/revealEmptyCells';
-import { revealWholeField, playGameLost } from '../utils/gameLost';
-import gameWon from '../utils/gameWon';
+import Cell from '../Cell/Cell';
+import SIZES from '../../constants/SIZES';
+import MINES from '../../constants/MINES';
+import createEmptyField from './createEmptyField';
+import fillField from './fillField';
+import revealEmptyCells from '../Cell/revealEmptyCells';
+import { revealWholeField, playGameLost } from '../../utils/gameLost';
+import gameWon from '../../utils/gameWon';
 let isWin = false;
+let isFirstClick = true;
 
 export default function Field() {
   const [grid, setGrid] = useState([]);
@@ -18,14 +20,19 @@ export default function Field() {
 
   useEffect(() => {
     function refreshGrid() {
-      setGrid(createField());
+      setGrid(createEmptyField());
     }
 
     refreshGrid();
   }, []);
 
   const revealCell = (index) => {
-    if (!grid[index].isRevealed) {
+    if (isFirstClick) {
+      isFirstClick = false;
+      setGrid(fillField([...grid], index));
+    }
+
+    if (!grid[index].isRevealed && !grid[index].isFlagged) {
       if (grid[index].value === 'x') {
         setGrid(revealWholeField([...grid]));
         playGameLost();
@@ -33,18 +40,21 @@ export default function Field() {
       else {
         const [newGrid, newRevealedCells] = revealEmptyCells([...grid], index);
         setGrid(newGrid);
-        setRevealedCells(revealedCells + newRevealedCells); 
+        setRevealedCells(revealedCells + newRevealedCells);
       }
     }
+  }
+
+  const flagCell = (index) => {
+    
   }
 
   useEffect(() => {
     if (!isWin && checkWin(revealedCells)) {
       isWin = true;
-      console.log('WON!')
       setGrid(revealWholeField([...grid]));
       gameWon();
-    } 
+    }
   });
 
   const updateFlag = (event, index) => {

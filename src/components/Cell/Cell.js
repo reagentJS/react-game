@@ -1,5 +1,5 @@
 import React from 'react';
-import SIZES from '../constants/SIZES';
+import SIZES from '../../constants/SIZES';
 
 export default function Cell({ cellObj, revealCell, updateFlag }) {
   return (

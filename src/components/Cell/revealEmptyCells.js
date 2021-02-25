@@ -1,4 +1,4 @@
-import SIZES from '../constants/SIZES';
+import SIZES from '../../constants/SIZES';
 
 export default function revealEmptyCells(grid, id) {
   const flipped = [];

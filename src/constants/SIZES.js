@@ -1,8 +1,20 @@
 const SIZES = {
   _cols: 9,
   _rows: 9,
-  cellSize: 50,
-  margin: 4,
+
+  maxUnit: 58,
+  unitByWindowWidth: 58,
+  get unit()  {
+    return Math.min(this.maxUnit, this.unitByWindowWidth);
+  },
+
+  get cellSize() {
+    return this.unit - (2 * this.margin);
+  },
+
+  get margin() {
+    return this.unit * 0.069;
+  },
 
   set rows(newRows) {
     const localRows = Math.floor(Math.abs(newRows));
@@ -28,10 +40,6 @@ const SIZES = {
 
   get fieldArea() {
     return this._cols * this._rows;
-  },
-
-  get fieldWidthInPixels() {
-    return this._cols * (this.cellSize + 2 * this.margin);
   },
 };
 

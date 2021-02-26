@@ -7,12 +7,14 @@ import fillField from './fillField';
 import revealEmptyCells from '../Cell/revealEmptyCells';
 import { revealWholeField, playGameLost } from '../../utils/gameLost';
 import gameWon from '../../utils/gameWon';
+import useWindowWidth from '../../utils/useWindowWidth';
 let isWin = false;
 let isFirstClick = true;
 
 export default function Field() {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
+  const windowWidth = useWindowWidth();
 
   SIZES.cols = 9;
   SIZES.rows = 9;
@@ -32,6 +34,8 @@ export default function Field() {
       setGrid(revealWholeField([...grid]));
       gameWon();
     }
+
+    SIZES.unitByWindowWidth = (windowWidth - (2 * 20)) / SIZES.cols;
   });
 
   const revealCell = (event, index) => {
@@ -69,7 +73,8 @@ export default function Field() {
     <div
       className='field'
       style={{
-        width: `${SIZES.fieldWidthInPixels}px`,
+        width: `${SIZES.cols * SIZES.unit}px`,
+        height: `${SIZES.rows * SIZES.unit}px`,
       }}
     >
 

@@ -11,6 +11,7 @@ export default function revealEmptyCells(grid, id) {
 
     if (!checkingCell.isRevealed) {
       checkingCell.isRevealed = true;
+      checkingCell.isFlagged = false;
       revealedCells++;
     }
 
@@ -25,6 +26,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1]);
 
         grid[id - 1].isRevealed = true;
+        grid[id - 1].isFlagged = false;
         revealedCells++;
       }
     }
@@ -36,6 +38,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1]);
 
         grid[id + 1].isRevealed = true;
+        grid[id + 1].isFlagged = false;
         revealedCells++;
       }
     }
@@ -47,6 +50,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - SIZES.cols]);
 
         grid[id - SIZES.cols].isRevealed = true;
+        grid[id - SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }
@@ -58,6 +62,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + SIZES.cols]);
 
         grid[id + SIZES.cols].isRevealed = true;
+        grid[id + SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }
@@ -70,6 +75,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1 - SIZES.cols]);
 
         grid[id - 1 - SIZES.cols].isRevealed = true;
+        grid[id - 1 - SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }
@@ -81,6 +87,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id - 1 + SIZES.cols]);
 
         grid[id - 1 + SIZES.cols].isRevealed = true;
+        grid[id - 1 + SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }
@@ -92,6 +99,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1 - SIZES.cols]);
 
         grid[id + 1 - SIZES.cols].isRevealed = true;
+        grid[id + 1 - SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }
@@ -103,6 +111,7 @@ export default function revealEmptyCells(grid, id) {
           : flipped.push(grid[id + 1 + SIZES.cols]);
 
         grid[id + 1 + SIZES.cols].isRevealed = true;
+        grid[id + 1 + SIZES.cols].isFlagged = false;
         revealedCells++;
       }
     }

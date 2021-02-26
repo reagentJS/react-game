@@ -11,7 +11,7 @@ import useWindowWidth from '../../utils/useWindowWidth';
 let isWin = false;
 let isFirstClick = true;
 
-export default function Field({ isNewGameWindowVisible }) {
+export default function Field({ isNewGamePopupVisible }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
   const windowWidth = useWindowWidth();
@@ -41,7 +41,7 @@ export default function Field({ isNewGameWindowVisible }) {
   const revealCell = (event, index) => {
     event.preventDefault();
 
-    if (isNewGameWindowVisible) {
+    if (isNewGamePopupVisible) {
       return;
     }
 
@@ -66,7 +66,7 @@ export default function Field({ isNewGameWindowVisible }) {
   const updateFlag = (event, index) => {
     event.preventDefault();
 
-    if (isNewGameWindowVisible) {
+    if (isNewGamePopupVisible) {
       return;
     }
 

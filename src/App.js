@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import './styles/styles.scss';
-import NewGameWindow from './components/NewGameWindow/NewGameWindow';
+import NewGamePopup from './components/NewGamePopup/NewGamePopup';
 import Field from './components/Field/Field';
 
 function App() {
-  const [isNewGameWindowVisible, setNewGameWindowVisibility] = useState(true);
+  const [isNewGamePopupVisible, setNewGamePopupVisibility] = useState(true);
 
   return (
     <>
-      <NewGameWindow
-        isVisible={isNewGameWindowVisible}
-        setVisibility={setNewGameWindowVisibility}
+      <NewGamePopup
+        isVisible={isNewGamePopupVisible}
+        setVisibility={setNewGamePopupVisibility}
       />
       <Field
-        isNewGameWindowVisible={isNewGameWindowVisible}
+        isNewGamePopupVisible={isNewGamePopupVisible}
       />
     </>
   );

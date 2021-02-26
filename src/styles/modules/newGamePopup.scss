@@ -1,25 +1,39 @@
-.newGame-window {
+.newGame-popup {
   position: absolute;
-  top: 50%;
+  top: 35vh;
   left: 50%;
   z-index: 10;
   transform: translateX(-50%);
-  transform: translateY(-50%);
-  
+
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   opacity: 1;
-  transition: 1s all;
+  transition: .6s all;
   border-radius: 5px;
   background-color: $color-background;
+
+  .cell {
+    padding: 10px 0;
+    width: 100px;
+    border: none;
+    text-align: center;
+    font-size: 18px;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 }
 
 .invis {
   top: 0;
-  transform: translateY(-100%);
   opacity: 0;
+}
+
+.buttons {
+  display: flex;
 }

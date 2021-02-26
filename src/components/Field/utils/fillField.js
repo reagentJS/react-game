@@ -1,5 +1,5 @@
-import SIZES from '../../constants/SIZES';
-import MINES from '../../constants/MINES';
+import SIZES from '../../../constants/SIZES';
+import MINES from '../../../constants/MINES';
 
 export default function fillField(grid, indexFirstClicked) {
   grid = setupMines(grid, indexFirstClicked);

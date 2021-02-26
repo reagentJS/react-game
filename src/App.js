@@ -1,4 +1,4 @@
-import './styles/styles.css';
+import './styles/styles.scss';
 import Field from './components/Field/Field';
 
 function App() {

@@ -1,0 +1,12 @@
+$depth: 4;
+$color-prim: #5ba6ff;
+$color-sec: #f3d248;
+$lighten-on-hover: 6%;
+$button-speed: .06;
+$timing-function: ease-out;
+
+@mixin background($imageName, $color) {
+  background-image: url('../../assets/images/#{$imageName}.png');
+  background-size: contain;
+  background-color: $color;
+}

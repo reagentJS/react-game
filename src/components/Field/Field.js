@@ -11,7 +11,7 @@ import useWindowWidth from '../../utils/useWindowWidth';
 let isWin = false;
 let isFirstClick = true;
 
-export default function Field() {
+export default function Field({ isNewGameWindowVisible }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
   const windowWidth = useWindowWidth();
@@ -41,6 +41,10 @@ export default function Field() {
   const revealCell = (event, index) => {
     event.preventDefault();
 
+    if (isNewGameWindowVisible) {
+      return;
+    }
+
     if (isFirstClick) {
       isFirstClick = false;
       setGrid(fillField([...grid], index));
@@ -61,6 +65,10 @@ export default function Field() {
 
   const updateFlag = (event, index) => {
     event.preventDefault();
+
+    if (isNewGameWindowVisible) {
+      return;
+    }
 
     if (!grid[index].isRevealed) {
       const newGrid = [...grid];

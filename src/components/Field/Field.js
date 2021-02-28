@@ -11,14 +11,12 @@ import useWindowWidth from '../../utils/useWindowWidth';
 let isWin = false;
 let isFirstClick = true;
 
-export default function Field({ isNewGamePopupVisible }) {
+export default function Field({ fieldParameters, isNewGamePopupVisible }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
   const windowWidth = useWindowWidth();
 
-  SIZES.cols = 9;
-  SIZES.rows = 9;
-  MINES.quantity = 9;
+  refreshFieldParameters(fieldParameters);
 
   useEffect(() => {
     function refreshGrid() {
@@ -99,6 +97,12 @@ export default function Field({ isNewGamePopupVisible }) {
 
     </div>
   );
+}
+
+function refreshFieldParameters({ width, height, minesQuantity }) {
+  SIZES.cols = width;
+  SIZES.rows = height;
+  MINES.quantity = minesQuantity;
 }
 
 function checkWin(revealedCells) {

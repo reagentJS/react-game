@@ -1,7 +1,7 @@
 $depth: 4;
 $color-prim: #5ba6ff;
 $color-sec: #f3d248;
-$color-background: #D8D8D8;
+$color-light: #D8D8D8;
 $lighten-on-hover: 6%;
 $button-speed: .06;
 $timing-function: ease-out;
@@ -10,4 +10,20 @@ $timing-function: ease-out;
   background-image: url('../../assets/images/#{$imageName}.png');
   background-size: contain;
   background-color: $color;
+}
+
+@mixin flex($isChangeMainAxis: false, $isCenterMain: false, $isCenterCross: false) {
+  display: flex;
+
+  @if $isChangeMainAxis {
+    flex-direction: column;
+  }
+
+  @if $isCenterMain {
+    justify-content: center;
+  }
+
+  @if $isCenterCross {
+    align-items: center;
+  }
 }

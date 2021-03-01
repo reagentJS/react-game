@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './styles/styles.scss';
 import NewGamePopup from './components/NewGamePopup/NewGamePopup';
+import Game from './components/Game/Game';
 import Field from './components/Field/Field';
 import DIFFICULTIES from './constants/DIFFICULTIES';
 import OTHER_CONSTANTS from './constants/OTHER_CONSTANTS';
@@ -31,7 +32,7 @@ function App() {
           toggleVisibility={toggleVisibility}
           startNewGame={startNewGame}
         />
-        : <Field
+        : <Game
           fieldParameters={fieldParameters}
           isNewGamePopupVisible={isNewGamePopupVisibleAfterAnimation}
         />

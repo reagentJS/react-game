@@ -6,15 +6,12 @@
   transform: translateX(-50%);
 
   padding: 40px 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex(true, true, true);
 
   opacity: 1;
   transition: .6s all;
   border-radius: 5px;
-  background-color: $color-background;
+  background-color: $color-light;
   font-size: 18px;
 
   span {

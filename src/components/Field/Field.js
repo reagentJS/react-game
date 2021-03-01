@@ -5,11 +5,13 @@ import MINES from '../../constants/MINES';
 import createEmptyField from './utils/createEmptyField';
 import fillField from './utils/fillField';
 import revealEmptyCells from '../Cell/utils/revealEmptyCells';
+import revealAroundCells from '../Cell/utils/revealAroundCells';
 import { revealWholeField, playGameLost } from '../../utils/gameLost';
 import gameWon from '../../utils/gameWon';
 import useWindowWidth from '../../utils/useWindowWidth';
 let isWin = false;
 let isFirstClick = true;
+let revealedCellsCounter = 0;
 
 export default function Field({ fieldParameters, isNewGamePopupVisible }) {
   const [grid, setGrid] = useState([]);
@@ -27,7 +29,7 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
   }, []);
 
   useEffect(() => {
-    if (!isWin && checkWin(revealedCells)) {
+    if (!isWin && revealedCells >= MINES.cellsWithoutMines) {
       isWin = true;
       setGrid(revealWholeField([...grid]));
       gameWon();
@@ -36,13 +38,7 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
     SIZES.unitByWindowWidth = (windowWidth - (2 * 20)) / SIZES.cols;
   });
 
-  const revealCell = (event, index) => {
-    event.preventDefault();
-
-    if (isNewGamePopupVisible) {
-      return;
-    }
-
+  const revealCell = (index) => {
     if (isFirstClick) {
       isFirstClick = false;
       setGrid(fillField([...grid], index));
@@ -56,22 +52,23 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
       else {
         const [newGrid, newRevealedCells] = revealEmptyCells([...grid], index);
         setGrid(newGrid);
-        setRevealedCells(revealedCells + newRevealedCells);
+        revealedCellsCounter += newRevealedCells;
+        setRevealedCells(revealedCellsCounter);
       }
     }
   }
 
-  const updateFlag = (event, index) => {
-    event.preventDefault();
-
-    if (isNewGamePopupVisible) {
-      return;
-    }
-
+  const updateFlag = (index) => {
     if (!grid[index].isRevealed) {
       const newGrid = [...grid];
       newGrid[index].isFlagged = !newGrid[index].isFlagged;
       setGrid(newGrid);
+    }
+  }
+
+  const revealAround = (id) => {
+    if (grid[id].isRevealed) {
+      revealAroundCells(grid, id, revealCell);
     }
   }
 
@@ -82,6 +79,7 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
         width: `${SIZES.cols * SIZES.unit}px`,
         height: `${SIZES.rows * SIZES.unit}px`,
       }}
+      onContextMenu={(e) => e.preventDefault()}
     >
 
       {grid.map((cellObj) => {
@@ -91,6 +89,7 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
             cellObj={cellObj}
             revealCell={revealCell}
             updateFlag={updateFlag}
+            revealAround={revealAround}
           />
         );
       })}
@@ -103,8 +102,4 @@ function refreshFieldParameters({ width, height, minesQuantity }) {
   SIZES.cols = width;
   SIZES.rows = height;
   MINES.quantity = minesQuantity;
-}
-
-function checkWin(revealedCells) {
-  return revealedCells === MINES.cellsWithoutMines;
 }

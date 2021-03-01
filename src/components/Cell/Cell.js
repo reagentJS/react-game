@@ -2,30 +2,38 @@ import React from 'react';
 import SIZES from '../../constants/SIZES';
 import NUM_COLORS from '../../constants/NUM_COLORS';
 
-export default function Cell({ cellObj, revealCell, updateFlag }) {
+export default function Cell({ cellObj, revealCell, updateFlag, revealAround }) {
   const className = defineClassNameByProperties(cellObj);
 
-  const aa = (e, id) => {
-    console.log(e)
-    revealCell(e, id);
+  let isLeftDown = false;
+  let isRightDown = false;
 
-    var leftButtonDown = false;
-    var rightButtonDown = false;
+  const handleClick = (event, id) => {
+    if (event.type === 'mousedown') {
+      if (event.which === 1) {
+        isLeftDown = true;
+      }
+      else if (event.which === 3) {
+        isRightDown = true;
+      }
 
-    if (e.which == 1) {
-      leftButtonDown = true;
-    } else if (e.which == 3) {
-      rightButtonDown = true;
+      if (isLeftDown && isRightDown) {
+        revealAround(id);
+      }
     }
-
-    if (e.which == 1) {
-      leftButtonDown = false;
-    } else if (e.which == 3) {
-      rightButtonDown = false;
-    }
-
-    if (leftButtonDown && rightButtonDown) {
-      console.log('AAAAAAAAA')
+    else if (event.type === 'mouseup') {
+      if (event.which === 1) {
+        isLeftDown = false;
+        if (!isRightDown) {
+          revealCell(id);
+        }
+      }
+      else if (event.which === 3) {
+        isRightDown = false;
+        if (!isLeftDown) {
+          updateFlag(id);
+        }
+      }
     }
   }
 
@@ -40,8 +48,8 @@ export default function Cell({ cellObj, revealCell, updateFlag }) {
         fontSize: `${0.5 * SIZES.unit}px`,
         color: NUM_COLORS[cellObj.value] || '#000',
       }}
-      onClick={(event) => aa(event, cellObj.id)}
-      onContextMenu={(event) => updateFlag(event, cellObj.id)}
+      onMouseDown={(event) => handleClick(event.nativeEvent, cellObj.id)}
+      onMouseUp={(event) => handleClick(event.nativeEvent, cellObj.id)}
     >
       {cellObj.isRevealed ? cellObj.value : ''}
     </a>

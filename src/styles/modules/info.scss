@@ -1,0 +1,14 @@
+.info {
+  @include flex(false, false, true);
+  font-size: 18px;
+  font-weight: 700;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.mines-remain {
+  margin-right: 80px;
+  @include flex(false, false, true);
+}

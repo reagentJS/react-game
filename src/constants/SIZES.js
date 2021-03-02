@@ -4,8 +4,11 @@ const SIZES = {
 
   maxUnit: 58,
   unitByWindowWidth: 58,
+  unitByWindowHeight: 58,
+  infoHeight: 50,
+  paddings: 40,
   get unit()  {
-    return Math.min(this.maxUnit, this.unitByWindowWidth);
+    return Math.min(this.maxUnit, this.unitByWindowWidth, this.unitByWindowHeight);
   },
 
   get cellSize() {

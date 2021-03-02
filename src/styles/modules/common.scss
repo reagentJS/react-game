@@ -8,7 +8,7 @@ body {
 }
 
 .game {
-  padding-top: 10vh;
+  padding: 5vh 0;
   @include flex(true, false, true);
 
   font-size: 18px;

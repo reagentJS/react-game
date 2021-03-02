@@ -8,15 +8,15 @@ import revealEmptyCells from '../Cell/utils/revealEmptyCells';
 import revealAroundCells from '../Cell/utils/revealAroundCells';
 import { revealWholeField, playGameLost } from '../../utils/gameLost';
 import gameWon from '../../utils/gameWon';
-import useWindowWidth from '../../utils/useWindowWidth';
+import useWindowSize from '../../utils/useWindowSize';
 let isWin = false;
 let isFirstClick = true;
 let revealedCellsCounter = 0;
 
-export default function Field({ fieldParameters, isNewGamePopupVisible }) {
+export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, setStopTimer }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
-  const windowWidth = useWindowWidth();
+  const { windowWidth, windowHeight } = useWindowSize();
 
   refreshFieldParameters(fieldParameters);
 
@@ -32,10 +32,14 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
     if (!isWin && revealedCells >= MINES.cellsWithoutMines) {
       isWin = true;
       setGrid(revealWholeField([...grid]));
+      setFlaggedCount(0);
       gameWon();
+      setStopTimer(true);
     }
 
-    SIZES.unitByWindowWidth = (windowWidth - (2 * 20)) / SIZES.cols;
+    const paddingsHeight = 2 * windowHeight * 10 / 100;
+    SIZES.unitByWindowWidth = (windowWidth - (SIZES.paddings)) / SIZES.cols;
+    SIZES.unitByWindowHeight = (windowHeight - (SIZES.infoHeight + paddingsHeight + SIZES.paddings)) / SIZES.rows;
   });
 
   const revealCell = (index) => {
@@ -48,6 +52,7 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
       if (grid[index].value === 'x') {
         setGrid(revealWholeField([...grid]));
         playGameLost();
+        setStopTimer(true);
       }
       else {
         const [newGrid, newRevealedCells] = revealEmptyCells([...grid], index);
@@ -61,6 +66,11 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
   const updateFlag = (index) => {
     if (!grid[index].isRevealed) {
       const newGrid = [...grid];
+
+      newGrid[index].isFlagged
+        ? setFlaggedCount(flaggedCount + 1)
+        : setFlaggedCount(flaggedCount - 1);
+
       newGrid[index].isFlagged = !newGrid[index].isFlagged;
       setGrid(newGrid);
     }
@@ -77,7 +87,6 @@ export default function Field({ fieldParameters, isNewGamePopupVisible }) {
       className='field'
       style={{
         width: `${SIZES.cols * SIZES.unit}px`,
-        height: `${SIZES.rows * SIZES.unit}px`,
       }}
       onContextMenu={(e) => e.preventDefault()}
     >

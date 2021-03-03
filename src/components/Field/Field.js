@@ -9,13 +9,13 @@ import revealAroundCells from '../Cell/utils/revealAroundCells';
 import { revealWholeField, playGameLost } from '../../utils/gameLost';
 import gameWon from '../../utils/gameWon';
 import useWindowSize from '../../utils/useWindowSize';
-let isWin = false;
-let revealedCellsCounter = 0;
+import OTHER_CONSTANTS from '../../constants/OTHER_CONSTANTS';
 
 export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, setStopTimer, time }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
   const windowSize = useWindowSize();
+  const [isWin, setIsWin] = useState(false);
   const [isFirstClick, setIsFirstClick] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, 
 
   useEffect(() => {
     if (!isWin && revealedCells >= MINES.cellsWithoutMines) {
-      isWin = true;
+      setIsWin(true);
       setGrid(revealWholeField([...grid]));
       setFlaggedCount(0);
       gameWon(time);
@@ -62,8 +62,8 @@ export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, 
       else {
         const [newGrid, newRevealedCells] = revealEmptyCells([...grid], index);
         setGrid(newGrid);
-        revealedCellsCounter += newRevealedCells;
-        setRevealedCells(revealedCellsCounter);
+        OTHER_CONSTANTS.revealedCellsCounter += newRevealedCells;
+        setRevealedCells(OTHER_CONSTANTS.revealedCellsCounter);
       }
     }
   }
@@ -116,4 +116,5 @@ function refreshFieldParameters({ width, height, minesQuantity }) {
   SIZES.cols = width;
   SIZES.rows = height;
   MINES.quantity = minesQuantity;
+  OTHER_CONSTANTS.revealedCellsCounter = 0;
 }

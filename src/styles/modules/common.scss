@@ -11,7 +11,7 @@ body {
   padding: 5vh 0;
   @include flex(true, false, true);
 
-  font-size: 18px;
+  font-size: $font-size-normal;
   color: $color-light;
 }
 

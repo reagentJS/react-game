@@ -10,15 +10,17 @@ import { revealWholeField, playGameLost } from '../../utils/gameLost';
 import gameWon from '../../utils/gameWon';
 import useWindowSize from '../../utils/useWindowSize';
 let isWin = false;
-let isFirstClick = true;
 let revealedCellsCounter = 0;
 
-export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, setStopTimer }) {
+export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, setStopTimer, time }) {
   const [grid, setGrid] = useState([]);
   const [revealedCells, setRevealedCells] = useState(0);
-  const { windowWidth, windowHeight } = useWindowSize();
+  const windowSize = useWindowSize();
+  const [isFirstClick, setIsFirstClick] = useState(true);
 
-  refreshFieldParameters(fieldParameters);
+  useEffect(() => {
+    refreshFieldParameters(fieldParameters);
+  }, [fieldParameters]);
 
   useEffect(() => {
     function refreshGrid() {
@@ -33,25 +35,28 @@ export default function Field({ fieldParameters, flaggedCount, setFlaggedCount, 
       isWin = true;
       setGrid(revealWholeField([...grid]));
       setFlaggedCount(0);
-      gameWon();
+      gameWon(time);
       setStopTimer(true);
     }
+  });
 
+  useEffect(() => {
+    const { windowWidth, windowHeight } = windowSize;
     const paddingsHeight = 2 * windowHeight * 10 / 100;
     SIZES.unitByWindowWidth = (windowWidth - (SIZES.paddings)) / SIZES.cols;
     SIZES.unitByWindowHeight = (windowHeight - (SIZES.infoHeight + paddingsHeight + SIZES.paddings)) / SIZES.rows;
-  });
+  }, [windowSize]);
 
   const revealCell = (index) => {
     if (isFirstClick) {
-      isFirstClick = false;
+      setIsFirstClick(false);
       setGrid(fillField([...grid], index));
     }
 
     if (!grid[index].isRevealed && !grid[index].isFlagged) {
       if (grid[index].value === 'x') {
         setGrid(revealWholeField([...grid]));
-        playGameLost();
+        playGameLost(time);
         setStopTimer(true);
       }
       else {

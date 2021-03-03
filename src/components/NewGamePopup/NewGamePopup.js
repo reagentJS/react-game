@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import DIFFICULTIES from '../../constants/DIFFICULTIES';
 
 export default function NewGamePopup({ isVisible, toggleVisibility, startNewGame }) {
-  const buttonsArr = Object.keys(DIFFICULTIES).map((item) => (
+  const buttonsArr = Object.keys(DIFFICULTIES).map((diff) => (
     <button
-      key={item}
+      key={diff}
       className='cell cell-default'
-      onClick={() => startNewGame(item)}
+      onClick={() => startNewGame(diff)}
     >
-      {item[0].toUpperCase() + item.slice(1)}
+      {diff[0].toUpperCase() + diff.slice(1)}
     </button>
   ));
 

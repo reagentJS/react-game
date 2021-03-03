@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import mine from '../../assets/images/mine.png';
 
-export default function Info({ flaggedCount, isStopTimer }) {
-  const [time, setTime] = useState('00:00:00');
-
+export default function Info({ flaggedCount, isStopTimer, toggleVisibility, time, setTime }) {
   useEffect(() => {
     if (isStopTimer) {
       return;
@@ -18,11 +16,20 @@ export default function Info({ flaggedCount, isStopTimer }) {
 
   return (
     <div className='info'>
-      <div className='mines-remain'>
+      <div className='info-item'>
+        <button
+          onClick={toggleVisibility}
+        >
+          New game
+        </button>
+      </div>
+      <div className='info-item mines-remain'>
         <img src={mine} alt="mine" width="50" height="50" />
         {flaggedCount}
       </div>
-      {time}
+      <div className='info-item'>
+        {time}
+      </div>
     </div>
   );
 }

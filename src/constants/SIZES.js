@@ -7,7 +7,7 @@ const SIZES = {
   unitByWindowHeight: 58,
   infoHeight: 50,
   paddings: 40,
-  get unit()  {
+  get unit() {
     return Math.min(this.maxUnit, this.unitByWindowWidth, this.unitByWindowHeight);
   },
 

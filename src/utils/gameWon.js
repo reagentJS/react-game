@@ -1,3 +1,6 @@
-export default function gameWon() {
-  alert('Congratulations! You won!');
+export default function gameWon(time) {
+  alert(`
+    Congratulations! You won!
+    Time: ${time}`
+  );
 }

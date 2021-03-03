@@ -35,6 +35,7 @@ function App() {
         : <Game
           fieldParameters={fieldParameters}
           isNewGamePopupVisible={isNewGamePopupVisibleAfterAnimation}
+          toggleVisibility={toggleVisibility}
         />
       }
     </>

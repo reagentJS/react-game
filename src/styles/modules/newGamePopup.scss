@@ -1,6 +1,6 @@
 .newGame-popup {
   position: absolute;
-  top: 35vh;
+  top: 25vh;
   left: 50%;
   z-index: 10;
   transform: translateX(-50%);
@@ -12,7 +12,7 @@
   transition: .6s all;
   border-radius: 5px;
   background-color: $color-light;
-  font-size: 18px;
+  font-size: $font-size-normal;
 
   span {
     margin-bottom: 36px;
@@ -24,7 +24,7 @@
     width: 100px;
     border: none;
     text-align: center;
-    font-size: 18px;
+    font-size: $font-size-normal;
 
     &:last-child {
       margin-top: 20px;

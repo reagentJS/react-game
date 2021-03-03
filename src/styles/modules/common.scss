@@ -1,0 +1,22 @@
+* {
+  margin: 0 auto;
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
+body {
+  background-color: #30353b;
+}
+
+.game {
+  padding: 5vh 0;
+  @include flex(true, false, true);
+
+  font-size: $font-size-normal;
+  color: $color-light;
+}
+
+.field {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}

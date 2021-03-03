@@ -1,0 +1,25 @@
+.info {
+  @include flex(false, false, true);
+  font-size: $font-size-normal;
+  font-weight: 700;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.info-item {
+  margin-right: 80px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+.mines-remain {
+  @include flex(false, false, true);
+}

@@ -1,0 +1,38 @@
+.newGame-popup {
+  position: absolute;
+  top: 25vh;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+
+  padding: 40px 60px;
+  @include flex(true, true, true);
+
+  opacity: 1;
+  transition: .6s all;
+  border-radius: 5px;
+  background-color: $color-light;
+  font-size: $font-size-normal;
+
+  span {
+    margin-bottom: 36px;
+  }
+
+  .cell {
+    margin-bottom: 16px;
+    padding: 10px 0;
+    width: 100px;
+    border: none;
+    text-align: center;
+    font-size: $font-size-normal;
+  }
+}
+
+.invis {
+  top: 0;
+  opacity: 0;
+}
+
+.buttons {
+  display: flex;
+}

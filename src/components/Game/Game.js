@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Info from '../Info/Info';
 import Field from '../Field/Field';
-import MINES from '../../constants/MINES';
 
-export default function Game({ fieldParameters, isNewGamePopupVisible, toggleVisibility }) {
+export default function Game({ fieldParameters, toggleVisibility }) {
   const [flaggedCount, setFlaggedCount] = useState(fieldParameters.minesQuantity);
   const [isStopTimer, setStopTimer] = useState(false);
   const [time, setTime] = useState('00:00:00');

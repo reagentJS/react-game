@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import mine from '../../assets/images/mine.png';
 
 export default function Info({ flaggedCount, isStopTimer, toggleVisibility, time, setTime }) {
